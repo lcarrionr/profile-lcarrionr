@@ -1,0 +1,1377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Luis Carrión | Solution Architect · Digital Transformation &amp; AI Cloud</title>
+  <meta name="description" content="Solution Architect & Business Development Manager at TCS, specializing in Digital Transformation, Cloud Architecture, and AI-driven innovation across Latin America." />
+  <meta property="og:title" content="Luis Carrión | Solution Architect" />
+  <meta property="og:description" content="20+ years designing large-scale enterprise systems across Latin America." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ─── Reset & Base ─────────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg0: #050B18;
+      --bg1: #0D1526;
+      --bg2: #111e35;
+      --card: rgba(13,21,38,0.85);
+      --card-solid: #0d1526;
+      --blue:  #4F9CF9;
+      --teal:  #2DD4BF;
+      --purple:#A78BFA;
+      --gold:  #F59E0B;
+      --txt0:  #F0F4FF;
+      --txt1:  #CBD5E1;
+      --txt2:  #64748B;
+      --border:rgba(79,156,249,0.18);
+      --glow-blue: 0 0 30px rgba(79,156,249,0.25);
+      --glow-teal: 0 0 30px rgba(45,212,191,0.25);
+      --grad1: linear-gradient(135deg,#4F9CF9,#2DD4BF);
+      --grad2: linear-gradient(135deg,#A78BFA,#4F9CF9);
+      --grad3: linear-gradient(135deg,#F59E0B,#EF4444);
+      --radius: 16px;
+      --radius-sm: 8px;
+      --transition: 0.35s cubic-bezier(.4,0,.2,1);
+    }
+
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg0);
+      color: var(--txt0);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    h1,h2,h3,h4,h5 { font-family: 'Space Grotesk', sans-serif; line-height: 1.25; }
+
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+
+    /* ─── Scrollbar ─────────────────────────────────────────────────────── */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg0); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    /* ─── Utilities ─────────────────────────────────────────────────────── */
+    .grad-text {
+      background: var(--grad1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .grad-text-2 {
+      background: var(--grad2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .section-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1rem;
+    }
+    .section-label::before {
+      content: '';
+      width: 24px; height: 2px;
+      background: var(--teal);
+    }
+    .section-title {
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--txt0);
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--txt1);
+      max-width: 600px;
+      margin-bottom: 3rem;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    section { padding: 100px 0; }
+    .reveal { opacity: 0; transform: translateY(30px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ─── Navbar ────────────────────────────────────────────────────────── */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 18px 0;
+      transition: background var(--transition), box-shadow var(--transition), padding var(--transition);
+    }
+    #navbar.scrolled {
+      background: rgba(5,11,24,0.92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 1px 0 var(--border);
+      padding: 12px 0;
+    }
+    .nav-inner {
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 800;
+      font-size: 1.35rem;
+    }
+    .nav-logo span { color: var(--blue); }
+    .nav-links {
+      display: flex; align-items: center; gap: 2rem;
+    }
+    .nav-links a {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--txt1);
+      transition: color var(--transition);
+      position: relative;
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: -4px; left: 0;
+      width: 0; height: 2px;
+      background: var(--grad1);
+      border-radius: 2px;
+      transition: width var(--transition);
+    }
+    .nav-links a:hover { color: var(--txt0); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--grad1);
+      color: #fff !important;
+      padding: 8px 20px;
+      border-radius: 100px;
+      font-size: 0.875rem !important;
+      font-weight: 600 !important;
+      transition: opacity var(--transition), transform var(--transition) !important;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { opacity: 0.88; transform: translateY(-1px); }
+    .nav-cta::after { display: none !important; }
+    .nav-toggle {
+      display: none; background: none; border: none;
+      cursor: pointer; padding: 4px; color: var(--txt0);
+      flex-direction: column; gap: 5px;
+    }
+    .nav-toggle span { display: block; width: 24px; height: 2px; background: currentColor; border-radius: 2px; transition: var(--transition); }
+
+    /* ─── Hero ──────────────────────────────────────────────────────────── */
+    #hero {
+      position: relative; min-height: 100vh;
+      display: flex; align-items: center;
+      overflow: hidden; padding: 0;
+    }
+    #hero-canvas {
+      position: absolute; inset: 0; z-index: 0;
+    }
+    .hero-glow {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+    }
+    .hero-glow-1 { width: 600px; height: 600px; background: rgba(79,156,249,0.12); top: -100px; right: -100px; }
+    .hero-glow-2 { width: 400px; height: 400px; background: rgba(45,212,191,0.10); bottom: 0; left: -100px; }
+    .hero-content {
+      position: relative; z-index: 2;
+      max-width: 1200px; margin: 0 auto; padding: 0 24px;
+      padding-top: 80px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(79,156,249,0.12);
+      border: 1px solid rgba(79,156,249,0.25);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 0.8rem; font-weight: 500;
+      color: var(--blue); margin-bottom: 1.5rem;
+      animation: fadeDown .8s ease forwards;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--teal); animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(.8); } }
+    @keyframes fadeDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+    .hero-name {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      animation: fadeUp .9s .1s ease both;
+    }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .hero-title {
+      font-size: clamp(1rem, 2.5vw, 1.35rem);
+      color: var(--txt1);
+      font-weight: 400;
+      max-width: 640px;
+      margin-bottom: 2rem;
+      animation: fadeUp .9s .2s ease both;
+    }
+    .hero-title strong { color: var(--txt0); font-weight: 600; }
+    .hero-meta {
+      display: flex; flex-wrap: wrap; gap: 1.25rem;
+      margin-bottom: 2.5rem;
+      animation: fadeUp .9s .3s ease both;
+    }
+    .hero-meta-item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.875rem; color: var(--txt2);
+    }
+    .hero-meta-item svg { color: var(--blue); flex-shrink: 0; }
+    .hero-meta-item a:hover { color: var(--blue); }
+    .hero-actions {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      animation: fadeUp .9s .4s ease both;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--grad1);
+      color: #fff;
+      padding: 14px 28px;
+      border-radius: 100px;
+      font-weight: 600; font-size: 0.9rem;
+      transition: transform var(--transition), box-shadow var(--transition);
+      border: none; cursor: pointer;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: var(--glow-blue); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: var(--txt0);
+      padding: 13px 28px;
+      border-radius: 100px;
+      font-weight: 600; font-size: 0.9rem;
+      border: 1px solid var(--border);
+      transition: border-color var(--transition), background var(--transition);
+      cursor: pointer;
+    }
+    .btn-secondary:hover { border-color: var(--blue); background: rgba(79,156,249,0.08); }
+    .hero-scroll-hint {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--txt2); font-size: 0.75rem;
+      animation: fadeUp 1s .8s ease both;
+    }
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--blue), transparent);
+      animation: scrollAnim 2s ease infinite;
+    }
+    @keyframes scrollAnim { 0%,100% { transform:scaleY(1); opacity:1; } 50% { transform:scaleY(.6); opacity:.4; } }
+    .hero-stats {
+      display: flex; gap: 2.5rem; flex-wrap: wrap;
+      margin-top: 3.5rem;
+      padding-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      animation: fadeUp .9s .5s ease both;
+    }
+    .stat { }
+    .stat-num {
+      font-size: 2.25rem; font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--grad1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label { font-size: 0.8rem; color: var(--txt2); margin-top: 2px; }
+
+    /* ─── About ─────────────────────────────────────────────────────────── */
+    #about { background: var(--bg1); }
+    .about-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .about-text p { color: var(--txt1); margin-bottom: 1.25rem; font-size: 1.05rem; }
+    .about-text p:last-child { margin-bottom: 0; }
+    .about-highlights {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .highlight-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex; align-items: flex-start; gap: 1rem;
+      transition: border-color var(--transition), transform var(--transition);
+      backdrop-filter: blur(12px);
+    }
+    .highlight-card:hover { border-color: var(--blue); transform: translateX(4px); }
+    .highlight-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 1.25rem;
+    }
+    .highlight-icon.blue { background: rgba(79,156,249,0.15); color: var(--blue); }
+    .highlight-icon.teal { background: rgba(45,212,191,0.15); color: var(--teal); }
+    .highlight-icon.purple { background: rgba(167,139,250,0.15); color: var(--purple); }
+    .highlight-icon.gold { background: rgba(245,158,11,0.15); color: var(--gold); }
+    .highlight-card h4 { font-size: 0.95rem; font-weight: 600; margin-bottom: 4px; }
+    .highlight-card p { font-size: 0.85rem; color: var(--txt2); margin: 0; }
+
+    /* ─── Expertise ─────────────────────────────────────────────────────── */
+    #expertise { background: var(--bg0); }
+    .expertise-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+    }
+    .expertise-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      backdrop-filter: blur(12px);
+    }
+    .expertise-card:hover {
+      border-color: var(--blue);
+      transform: translateY(-4px);
+      box-shadow: var(--glow-blue);
+    }
+    .expertise-icon {
+      width: 52px; height: 52px;
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; margin-bottom: 1rem;
+    }
+    .expertise-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .expertise-card p { font-size: 0.85rem; color: var(--txt2); line-height: 1.6; }
+    .skill-tags {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 1rem;
+    }
+    .tag {
+      font-size: 0.7rem; font-weight: 500;
+      padding: 3px 10px; border-radius: 100px;
+      background: rgba(79,156,249,0.1);
+      color: var(--blue);
+      border: 1px solid rgba(79,156,249,0.2);
+    }
+    .tag.teal { background: rgba(45,212,191,0.1); color: var(--teal); border-color: rgba(45,212,191,0.2); }
+    .tag.purple { background: rgba(167,139,250,0.1); color: var(--purple); border-color: rgba(167,139,250,0.2); }
+
+    /* ─── Experience ────────────────────────────────────────────────────── */
+    #experience { background: var(--bg1); }
+    .timeline {
+      position: relative;
+      padding-left: 2rem;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute; left: 0; top: 8px; bottom: 0;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--blue), var(--teal), transparent);
+    }
+    .timeline-item {
+      position: relative;
+      padding-left: 2.5rem;
+      padding-bottom: 3rem;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-dot {
+      position: absolute; left: -2.1rem; top: 8px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--grad1);
+      box-shadow: 0 0 0 4px rgba(79,156,249,0.2);
+    }
+    .timeline-period {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: .08em;
+      color: var(--teal);
+      margin-bottom: 0.5rem;
+    }
+    .timeline-company {
+      font-size: 1.35rem; font-weight: 800; margin-bottom: 0.15rem;
+    }
+    .timeline-role {
+      font-size: 0.95rem; color: var(--txt1); font-weight: 500; margin-bottom: 1rem;
+    }
+    .timeline-description { color: var(--txt1); font-size: 0.95rem; margin-bottom: 1rem; }
+    .timeline-bullets {
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .timeline-bullets li {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 0.9rem; color: var(--txt1);
+    }
+    .timeline-bullets li::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0; margin-top: 8px;
+    }
+    .timeline-clients {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: rgba(79,156,249,0.06);
+      border-radius: var(--radius-sm);
+      border-left: 3px solid var(--blue);
+      font-size: 0.85rem;
+      color: var(--txt2);
+    }
+    .timeline-clients strong { color: var(--txt1); }
+
+    /* ─── Achievements ──────────────────────────────────────────────────── */
+    #achievements { background: var(--bg0); }
+    .achievements-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.25rem;
+    }
+    .achievement-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex; gap: 1.25rem;
+      align-items: flex-start;
+      transition: border-color var(--transition), transform var(--transition);
+      backdrop-filter: blur(12px);
+    }
+    .achievement-card:hover { border-color: var(--teal); transform: translateY(-3px); }
+    .achievement-num {
+      font-size: 2.5rem; font-weight: 800;
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--grad1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      line-height: 1; flex-shrink: 0;
+    }
+    .achievement-card p { font-size: 0.9rem; color: var(--txt1); }
+
+    /* ─── Credentials ───────────────────────────────────────────────────── */
+    #credentials { background: var(--bg1); }
+    .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .cred-section h3 {
+      font-size: 1.1rem; font-weight: 700; color: var(--txt0); margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .cred-section h3 span {
+      font-size: 1.25rem;
+    }
+    .cert-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 1rem;
+      transition: border-color var(--transition), transform var(--transition);
+      backdrop-filter: blur(12px);
+    }
+    .cert-card:hover { border-color: var(--gold); transform: translateX(4px); }
+    .cert-badge {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: rgba(245,158,11,0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; flex-shrink: 0;
+    }
+    .cert-card h4 { font-size: 0.875rem; font-weight: 600; margin-bottom: 3px; }
+    .cert-card span { font-size: 0.75rem; color: var(--txt2); }
+    .edu-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      backdrop-filter: blur(12px);
+    }
+    .edu-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
+    .edu-card .school { font-size: 0.9rem; color: var(--teal); font-weight: 500; margin-bottom: 4px; }
+    .edu-card .period { font-size: 0.8rem; color: var(--txt2); }
+
+    /* ─── Thought Leadership ────────────────────────────────────────────── */
+    #thought-leadership { background: var(--bg0); }
+    .tl-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.25rem;
+    }
+    .tl-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.75rem;
+      transition: border-color var(--transition), transform var(--transition);
+      backdrop-filter: blur(12px);
+    }
+    .tl-card:hover { border-color: var(--purple); transform: translateY(-4px); }
+    .tl-icon {
+      font-size: 2rem; margin-bottom: 1rem;
+    }
+    .tl-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .tl-card p { font-size: 0.875rem; color: var(--txt2); }
+
+    /* ─── Blog ──────────────────────────────────────────────────────────── */
+    #blog { background: var(--bg1); }
+    .blog-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem;
+    }
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+      backdrop-filter: blur(12px);
+      display: flex; flex-direction: column;
+    }
+    .blog-card:hover { border-color: var(--blue); transform: translateY(-5px); box-shadow: var(--glow-blue); }
+    .blog-card-header {
+      padding: 1.5rem 1.5rem 0;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .blog-category {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--blue);
+    }
+    .blog-read-time {
+      font-size: 0.75rem; color: var(--txt2);
+    }
+    .blog-card-body {
+      padding: 1rem 1.5rem 1.5rem;
+      flex: 1; display: flex; flex-direction: column;
+    }
+    .blog-date { font-size: 0.75rem; color: var(--txt2); margin-bottom: 0.75rem; }
+    .blog-card h3 {
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 0.75rem; line-height: 1.4;
+      transition: color var(--transition);
+    }
+    .blog-card:hover h3 { color: var(--blue); }
+    .blog-card p { font-size: 0.875rem; color: var(--txt2); line-height: 1.6; flex: 1; }
+    .blog-card-footer {
+      padding: 1rem 1.5rem;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .blog-card-footer span { font-size: 0.8rem; color: var(--txt2); }
+    .blog-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 0.8rem; font-weight: 600; color: var(--blue);
+      transition: gap var(--transition);
+    }
+    .blog-card:hover .blog-link { gap: 10px; }
+    .blog-img {
+      height: 8px;
+      background: var(--grad1);
+      width: 100%;
+    }
+    .blog-img.teal { background: linear-gradient(90deg, var(--teal), var(--blue)); }
+    .blog-img.purple { background: var(--grad2); }
+
+    /* ─── Contact / Footer ──────────────────────────────────────────────── */
+    #contact {
+      background: var(--bg0);
+      border-top: 1px solid var(--border);
+    }
+    .contact-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start;
+      padding: 80px 0;
+    }
+    .contact-cta h2 { font-size: clamp(1.75rem, 3vw, 2.25rem); font-weight: 800; margin-bottom: 1rem; }
+    .contact-cta p { color: var(--txt1); margin-bottom: 2rem; font-size: 1rem; }
+    .contact-links {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .contact-link {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 1.25rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color var(--transition), transform var(--transition);
+      backdrop-filter: blur(12px);
+    }
+    .contact-link:hover { border-color: var(--blue); transform: translateX(4px); }
+    .contact-link-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-link-icon.mail { background: rgba(79,156,249,0.15); color: var(--blue); }
+    .contact-link-icon.linkedin { background: rgba(45,212,191,0.15); color: var(--teal); }
+    .contact-link-icon.phone { background: rgba(167,139,250,0.15); color: var(--purple); }
+    .contact-link-icon.location { background: rgba(245,158,11,0.15); color: var(--gold); }
+    .contact-link div strong { display: block; font-size: 0.8rem; font-weight: 600; color: var(--txt0); }
+    .contact-link div span { font-size: 0.8rem; color: var(--txt2); }
+    .footer-bottom {
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-bottom p { font-size: 0.8rem; color: var(--txt2); }
+    .footer-nav { display: flex; gap: 1.5rem; }
+    .footer-nav a { font-size: 0.8rem; color: var(--txt2); transition: color var(--transition); }
+    .footer-nav a:hover { color: var(--blue); }
+
+    /* ─── Responsive ────────────────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; }
+      .nav-links.open {
+        display: flex; flex-direction: column;
+        position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+        background: rgba(5,11,24,0.98);
+        backdrop-filter: blur(20px);
+        justify-content: center; align-items: center;
+        gap: 2.5rem; z-index: 999;
+      }
+      .nav-links.open a { font-size: 1.5rem; }
+      .nav-toggle { display: flex; z-index: 1001; position: relative; }
+      .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .cred-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .hero-stats { gap: 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      section { padding: 70px 0; }
+      .hero-meta { gap: 0.75rem; }
+      .blog-grid { grid-template-columns: 1fr; }
+      .achievements-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ───────────────────────────────── NAVBAR ── -->
+<nav id="navbar">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo">LC<span>.</span></a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#expertise">Expertise</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#credentials">Credentials</a></li>
+      <li><a href="#blog">Blog</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ───────────────────────────────── HERO ──── -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-glow hero-glow-1"></div>
+  <div class="hero-glow hero-glow-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot"></span>
+      Available for strategic engagements
+    </div>
+
+    <h1 class="hero-name">
+      Luis<br /><span class="grad-text">Carrión</span>
+    </h1>
+
+    <p class="hero-title">
+      <strong>Solution Architect</strong> &amp; Business Development Manager at
+      <strong>Tata Consultancy Services</strong> &mdash;
+      specializing in <strong>Digital Transformation</strong>, Cloud Architecture, and
+      <strong>AI-driven innovation</strong> across Latin America.
+    </p>
+
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Lima, Peru
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:lcarrionr@gmail.com">lcarrionr@gmail.com</a>
+      </div>
+      <div class="hero-meta-item">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        <a href="https://linkedin.com/in/luis-carrion-rumiche" target="_blank" rel="noopener">linkedin.com/in/luis-carrion-rumiche</a>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <a href="#experience" class="btn-primary">
+        View Experience
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#contact" class="btn-secondary">
+        Get in Touch
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years of experience</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Countries served</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">15+</div>
+        <div class="stat-label">Enterprise clients</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3</div>
+        <div class="stat-label">AWS Certifications</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
+  </div>
+</section>
+
+<!-- ───────────────────────────────── ABOUT ─── -->
+<section id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <span class="section-label">About Me</span>
+        <h2 class="section-title">Bridging strategy &amp; technology execution</h2>
+        <p>Technology leader and Solution Architect with 20+ years of experience designing and delivering large-scale enterprise systems across Latin America. Currently Business Development Manager and Solution Architect at Tata Consultancy Services.</p>
+        <p>I support strategic clients in digital transformation, cloud adoption, application modernization, and AI-driven innovation. My background spans enterprise architecture, microservices, distributed systems, cloud-native platforms, and Generative AI solutions.</p>
+        <p>Experienced working with major financial institutions, telecom companies, and global enterprises across Peru, Chile, Brazil, Mexico, Colombia, and Argentina — recognized for designing scalable architectures and enabling organizations to modernize legacy platforms and accelerate innovation through AI and automation.</p>
+      </div>
+      <div class="about-highlights reveal">
+        <div class="highlight-card">
+          <div class="highlight-icon blue">&#127758;</div>
+          <div>
+            <h4>Latin America Region Lead</h4>
+            <p>Driving digital transformation programs across 6+ countries in LATAM</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon teal">&#9729;</div>
+          <div>
+            <h4>Cloud Architecture Expert</h4>
+            <p>AWS, Azure, GCP — from assessment to cloud operating model design</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon purple">&#129302;</div>
+          <div>
+            <h4>Generative AI Practitioner</h4>
+            <p>PoCs and MVPs leveraging GenAI and intelligent automation solutions</p>
+          </div>
+        </div>
+        <div class="highlight-card">
+          <div class="highlight-icon gold">&#128200;</div>
+          <div>
+            <h4>Business Development</h4>
+            <p>Supporting multimillion-dollar transformation proposals and strategies</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────── EXPERTISE -->
+<section id="expertise">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Architecture Expertise</span>
+      <h2 class="section-title">Technology capabilities</h2>
+      <p class="section-sub">Deep technical expertise across modern architecture disciplines — from enterprise strategy to hands-on implementation.</p>
+    </div>
+    <div class="expertise-grid">
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(79,156,249,0.12);color:var(--blue)">&#127963;</div>
+        <h3>Enterprise &amp; Solution Architecture</h3>
+        <p>Designing scalable enterprise architecture frameworks and modernization roadmaps aligned with business strategy.</p>
+        <div class="skill-tags">
+          <span class="tag">TOGAF</span><span class="tag">C4 Model</span><span class="tag">ADR</span>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(45,212,191,0.12);color:var(--teal)">&#9881;</div>
+        <h3>Microservices &amp; Distributed Systems</h3>
+        <p>Designing and implementing microservices ecosystems, API-based integration platforms, and event-driven architectures.</p>
+        <div class="skill-tags">
+          <span class="tag teal">Kafka</span><span class="tag teal">gRPC</span><span class="tag teal">REST</span>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(79,156,249,0.12);color:var(--blue)">&#9729;</div>
+        <h3>Cloud Architecture</h3>
+        <p>Multi-cloud expertise across AWS, Azure, and Google Cloud — assessments, migration, and cloud operating models.</p>
+        <div class="skill-tags">
+          <span class="tag">AWS</span><span class="tag">Azure</span><span class="tag">GCP</span>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(167,139,250,0.12);color:var(--purple)">&#129302;</div>
+        <h3>Generative AI &amp; Intelligent Automation</h3>
+        <p>Building AI-powered solutions, LLM integrations, and intelligent automation leveraging emerging GenAI technologies.</p>
+        <div class="skill-tags">
+          <span class="tag purple">LLMs</span><span class="tag purple">RAG</span><span class="tag purple">AI Agents</span>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(245,158,11,0.12);color:var(--gold)">&#128260;</div>
+        <h3>Application Modernization</h3>
+        <p>Migrating and modernizing legacy platforms to cloud-native architectures through proven transformation frameworks.</p>
+        <div class="skill-tags">
+          <span class="tag">Strangler Fig</span><span class="tag">Containers</span>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(45,212,191,0.12);color:var(--teal)">&#128274;</div>
+        <h3>DevSecOps Platforms</h3>
+        <p>Implementing DevOps and DevSecOps pipelines to improve software delivery speed, quality, and security posture.</p>
+        <div class="skill-tags">
+          <span class="tag teal">CI/CD</span><span class="tag teal">GitOps</span><span class="tag teal">IaC</span>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(79,156,249,0.12);color:var(--blue)">&#128202;</div>
+        <h3>Data Platforms &amp; System Design</h3>
+        <p>Designing scalable data platforms, database optimization, and resilient distributed system architectures.</p>
+        <div class="skill-tags">
+          <span class="tag">Data Lake</span><span class="tag">Streaming</span>
+        </div>
+      </div>
+      <div class="expertise-card reveal">
+        <div class="expertise-icon" style="background:rgba(167,139,250,0.12);color:var(--purple)">&#128279;</div>
+        <h3>Event-Driven &amp; Integration</h3>
+        <p>Building robust integration platforms and event-driven architectures for enterprise-scale connectivity.</p>
+        <div class="skill-tags">
+          <span class="tag purple">EDA</span><span class="tag purple">ESB</span><span class="tag purple">iPaaS</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────── EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Professional Journey</span>
+      <h2 class="section-title">Career experience</h2>
+      <p class="section-sub">20+ years designing and delivering enterprise systems, from distributed platforms to AI-driven innovation across Latin America.</p>
+    </div>
+    <div class="timeline">
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">2020 — Present</div>
+        <div class="timeline-company">Tata Consultancy Services</div>
+        <div class="timeline-role">Business Development Manager / Solution Architect – AI &amp; Cloud</div>
+        <p class="timeline-description">Lead digital transformation initiatives and cloud architecture programs for enterprise clients across Latin America. Responsible for designing scalable technology solutions, supporting presales engagements, and enabling organizations to adopt cloud-native architectures and modern development platforms.</p>
+        <ul class="timeline-bullets">
+          <li>Design enterprise and solution architectures for large-scale transformation programs</li>
+          <li>Support presales strategy and development of proposals for digital transformation and modernization initiatives</li>
+          <li>Lead cloud migration and modernization initiatives including assessments, foundation design, and cloud operating models</li>
+          <li>Drive innovation through PoCs and MVPs leveraging Generative AI and emerging technologies</li>
+          <li>Act as technology advisor for executive stakeholders across financial, telecom and enterprise sectors</li>
+        </ul>
+        <div class="timeline-clients">
+          <strong>Representative clients:</strong> Itaú, Petrobras, Banco de Chile, BBVA, Scotiabank, BCP, Davivienda, Embraer, Volkswagen, Claro, WOM, Pacifico Seguros, Grupo Gloria
+        </div>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">2013 — 2020</div>
+        <div class="timeline-company">Tata Consultancy Services <span style="color:var(--txt2);font-weight:400;font-size:0.9rem">(Peru)</span></div>
+        <div class="timeline-role">Software Architect / Technical Leader</div>
+        <p class="timeline-description">Led architecture design and modernization initiatives for financial institutions and large enterprises. Designed cloud-native platforms and microservices ecosystems while supporting development teams and technology leadership.</p>
+        <ul class="timeline-bullets">
+          <li>Designed microservices architectures and API-based integration platforms</li>
+          <li>Implemented DevOps and DevSecOps pipelines to improve software delivery</li>
+          <li>Led system modernization initiatives migrating legacy platforms to modern architectures</li>
+          <li>Provided technical leadership for architecture governance and solution design</li>
+        </ul>
+      </div>
+
+      <div class="timeline-item reveal">
+        <div class="timeline-dot"></div>
+        <div class="timeline-period">2006 — 2013</div>
+        <div class="timeline-company">Tata Consultancy Services <span style="color:var(--txt2);font-weight:400;font-size:0.9rem">(Uruguay)</span></div>
+        <div class="timeline-role">Software Architect / Technical Leader</div>
+        <p class="timeline-description">Worked on international projects for global clients, designing distributed systems and high-performance software components.</p>
+        <ul class="timeline-bullets">
+          <li>Architecture design for distributed enterprise systems</li>
+          <li>Development of high-performance software components</li>
+          <li>Database optimization and scalability improvements</li>
+          <li>Disaster recovery and resilience architecture</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────── ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Key Achievements</span>
+      <h2 class="section-title">Impact &amp; results</h2>
+      <p class="section-sub">Delivering measurable outcomes across digital transformation, cloud adoption, and AI innovation.</p>
+    </div>
+    <div class="achievements-grid">
+      <div class="achievement-card reveal">
+        <div class="achievement-num">01</div>
+        <p>Led cloud transformation and modernization initiatives for major banks and enterprises across Latin America</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="achievement-num">02</div>
+        <p>Designed enterprise architecture frameworks and modernization roadmaps for top financial institutions</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="achievement-num">03</div>
+        <p>Enabled cloud adoption programs including assessment, migration, modernization and cloud operating models</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="achievement-num">04</div>
+        <p>Led development of Proofs of Concept and MVPs using Generative AI and modern cloud architectures</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="achievement-num">05</div>
+        <p>Supported multimillion-dollar digital transformation proposals and technology strategies across multiple industries</p>
+      </div>
+      <div class="achievement-card reveal">
+        <div class="achievement-num">06</div>
+        <p>Mentored technology teams and promoted innovation through architecture communities, hackathons, and knowledge sessions</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────── CREDENTIALS -->
+<section id="credentials">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Credentials</span>
+      <h2 class="section-title">Certifications &amp; education</h2>
+    </div>
+    <div class="cred-grid reveal">
+      <div class="cred-section">
+        <h3><span>&#127942;</span> Certifications</h3>
+        <div class="cert-card">
+          <div class="cert-badge">&#9729;</div>
+          <div>
+            <h4>AWS Certified Solutions Architect</h4>
+            <span>Amazon Web Services</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge">&#129302;</div>
+          <div>
+            <h4>AWS Partner – Generative AI on AWS Essentials</h4>
+            <span>Amazon Web Services</span>
+          </div>
+        </div>
+        <div class="cert-card">
+          <div class="cert-badge">&#128200;</div>
+          <div>
+            <h4>AWS Partner – Generative AI for Executives</h4>
+            <span>Amazon Web Services</span>
+          </div>
+        </div>
+      </div>
+      <div class="cred-section">
+        <h3><span>&#127891;</span> Education</h3>
+        <div class="edu-card">
+          <h4>Computer Systems Engineering</h4>
+          <div class="school">Universidad de Ingeniería y Tecnología / UTEC</div>
+          <div class="period">Bachelor's Degree</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────── THOUGHT LEADERSHIP -->
+<section id="thought-leadership">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Community &amp; Leadership</span>
+      <h2 class="section-title">Thought leadership</h2>
+      <p class="section-sub">Evangelizing modern architecture practices and enabling innovation ecosystems.</p>
+    </div>
+    <div class="tl-grid">
+      <div class="tl-card reveal">
+        <div class="tl-icon">&#127908;</div>
+        <h3>Conference Speaker</h3>
+        <p>Speaker at technology conferences and webinars on Architecture, Cloud Computing, Microservices, Hyperautomation, and AI Agents across Latin America.</p>
+      </div>
+      <div class="tl-card reveal">
+        <div class="tl-icon">&#128161;</div>
+        <h3>Innovation Mentor</h3>
+        <p>Mentor and evaluator in regional innovation programs, including BBVA Hackathons, supporting teams building next-generation fintech solutions.</p>
+      </div>
+      <div class="tl-card reveal">
+        <div class="tl-icon">&#128293;</div>
+        <h3>Technology Evangelist</h3>
+        <p>Active technology evangelist promoting adoption of modern architecture practices, cloud-native patterns, and AI-driven engineering within the enterprise.</p>
+      </div>
+      <div class="tl-card reveal">
+        <div class="tl-icon">&#129309;</div>
+        <h3>Community Builder</h3>
+        <p>Active contributor to internal technology communities focused on Cloud and AI, fostering knowledge sharing and collaborative innovation across teams.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────── BLOG ──── -->
+<section id="blog">
+  <div class="container">
+    <div class="reveal">
+      <span class="section-label">Insights &amp; Perspectives</span>
+      <h2 class="section-title">From the blog</h2>
+      <p class="section-sub">Thoughts on digital transformation, cloud architecture, AI innovation, and enterprise modernization.</p>
+    </div>
+    <!-- Cards are injected here by JS reading blog/posts.json + individual .md files -->
+    <div class="blog-grid" id="home-blog-grid">
+      <!-- Loading skeleton -->
+      <div class="blog-card" style="opacity:.4;pointer-events:none">
+        <div class="blog-img"></div>
+        <div class="blog-card-body" style="padding:1.5rem">
+          <div style="height:12px;background:var(--border);border-radius:6px;margin-bottom:12px;width:40%"></div>
+          <div style="height:18px;background:var(--border);border-radius:6px;margin-bottom:8px"></div>
+          <div style="height:18px;background:var(--border);border-radius:6px;width:80%"></div>
+        </div>
+      </div>
+      <div class="blog-card" style="opacity:.25;pointer-events:none">
+        <div class="blog-img teal"></div>
+        <div class="blog-card-body" style="padding:1.5rem">
+          <div style="height:12px;background:var(--border);border-radius:6px;margin-bottom:12px;width:35%"></div>
+          <div style="height:18px;background:var(--border);border-radius:6px;margin-bottom:8px"></div>
+          <div style="height:18px;background:var(--border);border-radius:6px;width:70%"></div>
+        </div>
+      </div>
+      <div class="blog-card" style="opacity:.15;pointer-events:none">
+        <div class="blog-img purple"></div>
+        <div class="blog-card-body" style="padding:1.5rem">
+          <div style="height:12px;background:var(--border);border-radius:6px;margin-bottom:12px;width:38%"></div>
+          <div style="height:18px;background:var(--border);border-radius:6px;margin-bottom:8px"></div>
+          <div style="height:18px;background:var(--border);border-radius:6px;width:75%"></div>
+        </div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:2.5rem">
+      <a href="blog/index.html" class="btn-secondary" id="blog-view-all" style="display:none">
+        View all posts &nbsp;&#8594;
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────────────── CONTACT ─── -->
+<footer id="contact">
+  <div class="container">
+    <div class="contact-inner">
+      <div class="contact-cta reveal">
+        <span class="section-label">Get In Touch</span>
+        <h2>Let's build something <span class="grad-text">remarkable</span></h2>
+        <p>Open to strategic architecture engagements, digital transformation advisory, speaking opportunities, and innovation partnerships across Latin America.</p>
+        <a href="mailto:lcarrionr@gmail.com" class="btn-primary">
+          Send a message
+          <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+      <div class="contact-links reveal">
+        <a href="mailto:lcarrionr@gmail.com" class="contact-link">
+          <div class="contact-link-icon mail">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          </div>
+          <div>
+            <strong>Email</strong>
+            <span>lcarrionr@gmail.com</span>
+          </div>
+        </a>
+        <a href="https://linkedin.com/in/luis-carrion-rumiche" target="_blank" rel="noopener" class="contact-link">
+          <div class="contact-link-icon linkedin">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+          </div>
+          <div>
+            <strong>LinkedIn</strong>
+            <span>luis-carrion-rumiche</span>
+          </div>
+        </a>
+        <a href="tel:+51999440981" class="contact-link">
+          <div class="contact-link-icon phone">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+          </div>
+          <div>
+            <strong>Phone</strong>
+            <span>+51 999 440 981</span>
+          </div>
+        </a>
+        <div class="contact-link" style="cursor:default">
+          <div class="contact-link-icon location">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div>
+            <strong>Location</strong>
+            <span>Lima, Peru</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Luis Orlando Carrión Rumiche. All rights reserved.</p>
+      <nav class="footer-nav">
+        <a href="#about">About</a>
+        <a href="#expertise">Expertise</a>
+        <a href="#experience">Experience</a>
+        <a href="#blog">Blog</a>
+      </nav>
+    </div>
+  </div>
+</footer>
+
+<!-- ───────────────────────────────── SCRIPTS ─── -->
+<script>
+  /* ── Navbar scroll effect ── */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  }, { passive: true });
+
+  /* ── Mobile nav toggle ── */
+  const toggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  toggle.addEventListener('click', () => {
+    navLinks.classList.toggle('open');
+    const open = navLinks.classList.contains('open');
+    toggle.children[0].style.transform = open ? 'rotate(45deg) translate(5px,5px)' : '';
+    toggle.children[1].style.opacity = open ? '0' : '';
+    toggle.children[2].style.transform = open ? 'rotate(-45deg) translate(5px,-5px)' : '';
+  });
+  navLinks.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      toggle.children[0].style.transform = '';
+      toggle.children[1].style.opacity = '';
+      toggle.children[2].style.transform = '';
+    });
+  });
+
+  /* ── Scroll reveal ── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  /* ── Stagger reveal children in grids ── */
+  const staggerObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const items = entry.target.querySelectorAll('.reveal');
+        items.forEach((item, i) => {
+          setTimeout(() => item.classList.add('visible'), i * 80);
+        });
+        staggerObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  document.querySelectorAll('.expertise-grid, .achievements-grid, .blog-grid, .tl-grid').forEach(el => {
+    staggerObserver.observe(el);
+  });
+
+  /* ── Hero particles canvas ── */
+  (function() {
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles, mouse = { x: -1000, y: -1000 };
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', () => { resize(); init(); }, { passive: true });
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+
+    function randomInRange(a, b) { return a + Math.random() * (b - a); }
+
+    function init() {
+      const count = Math.min(Math.floor(W * H / 14000), 90);
+      particles = Array.from({ length: count }, () => ({
+        x: randomInRange(0, W),
+        y: randomInRange(0, H),
+        vx: randomInRange(-0.3, 0.3),
+        vy: randomInRange(-0.3, 0.3),
+        r: randomInRange(1, 2.5),
+        alpha: randomInRange(0.3, 0.8)
+      }));
+    }
+    init();
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      particles.forEach(p => {
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x < 0) p.x = W;
+        if (p.x > W) p.x = 0;
+        if (p.y < 0) p.y = H;
+        if (p.y > H) p.y = 0;
+
+        // Mouse repulsion
+        const dx = p.x - mouse.x, dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 100) {
+          const force = (100 - dist) / 100 * 0.5;
+          p.x += (dx / dist) * force;
+          p.y += (dy / dist) * force;
+        }
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(79,156,249,${p.alpha})`;
+        ctx.fill();
+      });
+
+      // Draw connections
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx * dx + dy * dy);
+          if (d < 130) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(79,156,249,${0.15 * (1 - d / 130)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+      requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  /* ── Animated stat counters ── */
+  function animateCounter(el, target, suffix = '') {
+    let start = 0;
+    const duration = 1500;
+    const step = timestamp => {
+      if (!step.startTime) step.startTime = timestamp;
+      const progress = Math.min((timestamp - step.startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.floor(eased * target) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+  const statsObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const stats = [
+          { el: null, val: 20, suf: '+' },
+          { el: null, val: 6, suf: '' },
+          { el: null, val: 15, suf: '+' },
+          { el: null, val: 3, suf: '' }
+        ];
+        document.querySelectorAll('.stat-num').forEach((el, i) => {
+          if (stats[i]) animateCounter(el, stats[i].val, stats[i].suf);
+        });
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.5 });
+  const heroStats = document.querySelector('.hero-stats');
+  if (heroStats) statsObserver.observe(heroStats);
+
+  /* ── Home blog section: fetch from blog/posts.json + individual .md files ── */
+  (async function loadHomeBlog() {
+    const grid    = document.getElementById('home-blog-grid');
+    const viewAll = document.getElementById('blog-view-all');
+    if (!grid) return;
+
+    function parseFM(text) {
+      const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+      if (!m) return {};
+      const meta = {};
+      m[1].split('\n').forEach(line => {
+        const ci = line.indexOf(':');
+        if (ci === -1) return;
+        meta[line.slice(0, ci).trim()] = line.slice(ci + 1).trim().replace(/^["']|["']$/g, '');
+      });
+      return meta;
+    }
+
+    const STRIPE     = { blue: '',        teal: ' teal',          purple: ' purple' };
+    const CAT_COLOR  = { blue: 'var(--blue)', teal: 'var(--teal)', purple: 'var(--purple)' };
+    const LINK_STYLE = { blue: '',        teal: 'color:var(--teal)', purple: 'color:var(--purple)' };
+
+    try {
+      const slugs = await fetch('blog/posts.json').then(r => r.json());
+
+      const posts = (await Promise.all(
+        slugs.slice(0, 3).map(slug =>
+          fetch(`blog/${slug}.md`)
+            .then(r => r.ok ? r.text() : null)
+            .then(text => text ? { slug, meta: parseFM(text) } : null)
+            .catch(() => null)
+        )
+      )).filter(Boolean);
+
+      if (!posts.length) return;
+
+      grid.innerHTML = '';
+      posts.forEach(({ slug, meta }, i) => {
+        const ac = meta.accent || 'blue';
+        const article = document.createElement('article');
+        article.className = 'blog-card reveal';
+        article.style.transitionDelay = `${i * 80}ms`;
+        article.innerHTML = `
+          <div class="blog-img${STRIPE[ac] || ''}"></div>
+          <div class="blog-card-header">
+            <span class="blog-category" style="color:${CAT_COLOR[ac] || 'var(--blue)'}">${meta.category || 'Article'}</span>
+            <span class="blog-read-time">&#128337; ${meta.readTime || '?'} min read</span>
+          </div>
+          <div class="blog-card-body">
+            <div class="blog-date">${meta.date || ''}</div>
+            <h3>${meta.title || slug}</h3>
+            <p>${meta.subtitle || ''}</p>
+          </div>
+          <div class="blog-card-footer">
+            <span>Luis Carrión</span>
+            <a href="blog/post.html?post=${encodeURIComponent(slug)}"
+               class="blog-link" style="${LINK_STYLE[ac] || ''}">Read more &#8594;</a>
+          </div>
+        `;
+        grid.appendChild(article);
+        requestAnimationFrame(() => article.classList.add('visible'));
+      });
+
+      viewAll.style.display = 'inline-flex';
+    } catch (err) {
+      console.warn('Blog section: could not load posts', err);
+    }
+  })();
+</script>
+</body>
+</html>

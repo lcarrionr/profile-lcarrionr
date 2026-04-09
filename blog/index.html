@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Blog | Luis Carrión</title>
+  <meta name="description" content="Insights on digital transformation, cloud architecture, AI innovation, and enterprise modernization by Luis Carrión." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg0: #050B18; --card: rgba(13,21,38,0.85);
+      --blue: #4F9CF9; --teal: #2DD4BF; --purple: #A78BFA;
+      --txt0: #F0F4FF; --txt1: #CBD5E1; --txt2: #64748B;
+      --border: rgba(79,156,249,0.18);
+      --grad1: linear-gradient(135deg,#4F9CF9,#2DD4BF);
+      --grad2: linear-gradient(135deg,#A78BFA,#4F9CF9);
+      --radius: 16px;
+      --t: 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg0); color: var(--txt0); line-height: 1.7; }
+    h1,h2,h3 { font-family: 'Space Grotesk', sans-serif; line-height: 1.25; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg0); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 3px; }
+
+    .navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(5,11,24,0.92); backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border); padding: 14px 0;
+    }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 1.25rem; }
+    .nav-logo span { color: var(--blue); }
+    .nav-right { display: flex; align-items: center; gap: 1.5rem; }
+    .nav-link { font-size: 0.85rem; color: var(--txt2); transition: color var(--t); }
+    .nav-link:hover { color: var(--txt0); }
+    .nav-back { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--txt2); transition: color var(--t); }
+    .nav-back:hover { color: var(--blue); }
+
+    .hero { padding: 140px 0 60px; border-bottom: 1px solid var(--border); }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: .15em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 1rem;
+    }
+    .section-label::before { content: ''; width: 24px; height: 2px; background: var(--teal); }
+    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 1rem; }
+    .grad-text { background: var(--grad1); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .hero p { font-size: 1.1rem; color: var(--txt1); max-width: 600px; }
+
+    main { max-width: 1200px; margin: 0 auto; padding: 60px 24px 100px; }
+
+    /* Loading skeleton */
+    .skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+    .skeleton-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; height: 280px; backdrop-filter: blur(12px);
+    }
+    .skeleton-bar { height: 4px; background: var(--border); }
+    .skeleton-body { padding: 1.5rem; display: flex; flex-direction: column; gap: 12px; }
+    .skeleton-line {
+      height: 12px; background: var(--border); border-radius: 6px;
+      animation: shimmer 1.5s infinite;
+    }
+    @keyframes shimmer {
+      0%,100% { opacity: .4; } 50% { opacity: .8; }
+    }
+
+    /* Cards */
+    .posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1.5rem; }
+    .blog-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; display: flex; flex-direction: column;
+      backdrop-filter: blur(12px); cursor: pointer;
+      transition: border-color var(--t), transform var(--t), box-shadow var(--t);
+      opacity: 0; transform: translateY(16px);
+      animation: fadeUp .45s ease forwards;
+    }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+    .blog-card:hover { transform: translateY(-5px); }
+    .blog-card.blue:hover   { border-color: var(--blue);   box-shadow: 0 0 30px rgba(79,156,249,0.2); }
+    .blog-card.teal:hover   { border-color: var(--teal);   box-shadow: 0 0 30px rgba(45,212,191,0.2); }
+    .blog-card.purple:hover { border-color: var(--purple); box-shadow: 0 0 30px rgba(167,139,250,0.2); }
+
+    .card-stripe { height: 4px; }
+    .card-stripe.blue   { background: var(--grad1); }
+    .card-stripe.teal   { background: linear-gradient(90deg,var(--teal),var(--blue)); }
+    .card-stripe.purple { background: var(--grad2); }
+
+    .card-header { padding: 1.25rem 1.5rem 0; display: flex; align-items: center; justify-content: space-between; }
+    .card-cat { font-size: 0.7rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+    .card-cat.blue   { color: var(--blue); }
+    .card-cat.teal   { color: var(--teal); }
+    .card-cat.purple { color: var(--purple); }
+    .card-time { font-size: 0.75rem; color: var(--txt2); }
+
+    .card-body { padding: 1rem 1.5rem 1.25rem; flex: 1; display: flex; flex-direction: column; }
+    .card-date { font-size: 0.75rem; color: var(--txt2); margin-bottom: .75rem; }
+    .card-title { font-size: 1.05rem; font-weight: 700; margin-bottom: .75rem; line-height: 1.4; transition: color var(--t); }
+    .blog-card.blue:hover   .card-title { color: var(--blue); }
+    .blog-card.teal:hover   .card-title { color: var(--teal); }
+    .blog-card.purple:hover .card-title { color: var(--purple); }
+    .card-sub { font-size: 0.875rem; color: var(--txt2); line-height: 1.6; flex: 1; }
+
+    .card-footer { padding: 1rem 1.5rem; border-top: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
+    .card-author { font-size: 0.8rem; color: var(--txt2); }
+    .card-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.8rem; font-weight: 600; transition: gap var(--t); }
+    .card-link.blue   { color: var(--blue); }
+    .card-link.teal   { color: var(--teal); }
+    .card-link.purple { color: var(--purple); }
+    .blog-card:hover .card-link { gap: 10px; }
+
+    .error-state { padding: 60px 0; text-align: center; color: var(--txt2); }
+    .error-state h3 { color: var(--txt1); margin-bottom: .5rem; font-size: 1.25rem; }
+
+    footer { border-top: 1px solid var(--border); padding: 1.5rem 0; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
+    footer p { font-size: 0.8rem; color: var(--txt2); }
+    .footer-link { font-size: 0.8rem; color: var(--txt2); transition: color var(--t); }
+    .footer-link:hover { color: var(--blue); }
+
+    @media (max-width: 600px) {
+      .posts-grid, .skeleton-grid { grid-template-columns: 1fr; }
+      .hero { padding: 120px 0 40px; }
+      .nav-right .nav-link { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">LC<span>.</span></a>
+    <div class="nav-right">
+      <a href="../index.html#expertise" class="nav-link">Expertise</a>
+      <a href="../index.html#experience" class="nav-link">Experience</a>
+      <a href="../index.html" class="nav-back">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+        Back to Profile
+      </a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <span class="section-label">Insights &amp; Perspectives</span>
+    <h1>From the <span class="grad-text">Blog</span></h1>
+    <p>Thoughts on digital transformation, cloud architecture, AI innovation, and enterprise modernization across Latin America.</p>
+  </div>
+</div>
+
+<main>
+  <!-- Loading skeleton shown while fetching -->
+  <div id="skeleton" class="skeleton-grid">
+    <div class="skeleton-card"><div class="skeleton-bar"></div><div class="skeleton-body"><div class="skeleton-line" style="width:40%"></div><div class="skeleton-line"></div><div class="skeleton-line" style="width:75%"></div><div class="skeleton-line" style="width:55%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-bar" style="background:linear-gradient(90deg,var(--teal),var(--blue))"></div><div class="skeleton-body"><div class="skeleton-line" style="width:35%"></div><div class="skeleton-line"></div><div class="skeleton-line" style="width:80%"></div><div class="skeleton-line" style="width:60%"></div></div></div>
+    <div class="skeleton-card"><div class="skeleton-bar" style="background:var(--grad2)"></div><div class="skeleton-body"><div class="skeleton-line" style="width:38%"></div><div class="skeleton-line"></div><div class="skeleton-line" style="width:70%"></div><div class="skeleton-line" style="width:50%"></div></div></div>
+  </div>
+  <div id="posts-container" style="display:none"></div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <p>&copy; 2025 Luis Orlando Carrión Rumiche</p>
+    <a href="../index.html" class="footer-link">&#8592; Back to Profile</a>
+  </div>
+</footer>
+
+<script>
+  function parseFrontMatter(text) {
+    const match = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/);
+    if (!match) return { meta: {}, content: text };
+    const meta = {};
+    match[1].split('\n').forEach(line => {
+      const ci = line.indexOf(':');
+      if (ci === -1) return;
+      meta[line.slice(0, ci).trim()] = line.slice(ci + 1).trim().replace(/^["']|["']$/g, '');
+    });
+    return { meta, content: match[2] };
+  }
+
+  function buildCard(slug, meta, delay) {
+    const ac = meta.accent || 'blue';
+    const card = document.createElement('article');
+    card.className = `blog-card ${ac}`;
+    card.style.animationDelay = `${delay}ms`;
+    card.innerHTML = `
+      <div class="card-stripe ${ac}"></div>
+      <div class="card-header">
+        <span class="card-cat ${ac}">${meta.category || 'Article'}</span>
+        <span class="card-time">&#128337; ${meta.readTime || '?'} min read</span>
+      </div>
+      <div class="card-body">
+        <div class="card-date">${meta.date || ''}</div>
+        <h2 class="card-title">${meta.title || slug}</h2>
+        <p class="card-sub">${meta.subtitle || ''}</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-author">Luis Carrión</span>
+        <span class="card-link ${ac}">Read article &#8594;</span>
+      </div>
+    `;
+    card.addEventListener('click', () => {
+      window.location.href = `post.html?post=${encodeURIComponent(slug)}`;
+    });
+    return card;
+  }
+
+  async function loadPosts() {
+    const skeleton   = document.getElementById('skeleton');
+    const container  = document.getElementById('posts-container');
+
+    try {
+      // 1. Fetch ordered slug list
+      const slugs = await fetch('posts.json').then(r => {
+        if (!r.ok) throw new Error(`posts.json: HTTP ${r.status}`);
+        return r.json();
+      });
+
+      // 2. Fetch all .md files in parallel, parse front matter
+      const posts = (await Promise.all(
+        slugs.map(slug =>
+          fetch(`${slug}.md`)
+            .then(r => r.ok ? r.text() : Promise.reject(`${slug}.md not found`))
+            .then(text => ({ slug, meta: parseFrontMatter(text).meta }))
+            .catch(err => { console.warn(err); return null; })
+        )
+      )).filter(Boolean);
+
+      // 3. Render
+      if (!posts.length) throw new Error('No posts could be loaded');
+
+      const grid = document.createElement('div');
+      grid.className = 'posts-grid';
+      posts.forEach(({ slug, meta }, i) => grid.appendChild(buildCard(slug, meta, i * 80)));
+
+      container.appendChild(grid);
+      skeleton.style.display  = 'none';
+      container.style.display = 'block';
+
+    } catch (err) {
+      console.error(err);
+      skeleton.style.display  = 'none';
+      container.style.display = 'block';
+      container.innerHTML = `
+        <div class="error-state">
+          <h3>Could not load posts</h3>
+          <p>${err.message || err}</p>
+        </div>`;
+    }
+  }
+
+  loadPosts();
+</script>
+</body>
+</html>
