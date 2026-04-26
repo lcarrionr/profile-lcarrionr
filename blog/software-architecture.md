@@ -1,6 +1,6 @@
 ---
 title: "Software Architecture Guide"
-subtitle: "Software architecture structured guide y 7 chapters for enterprise systems."
+subtitle: "Software architecture structured guide in 7 chapters for enterprise systems."
 category: "Software Architecture"
 date: "April 2026"
 readTime: "2"
